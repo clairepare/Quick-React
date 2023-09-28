@@ -9,13 +9,21 @@ import { terms } from './constants';  // Adjust the path based on your folder st
   
   
   const TermPage = ({courses}) => {
-    const [selection, setSelection] = useState("All");
-    console.log("Rendering TermPage with selection:", selection);
-    console.log("Courses:", courses);
+    const [termSelection, setTermSelection] = useState("All");
+    const [selectedList, setSelected] = useState([]);
+    /*console.log("Rendering TermPage with selection:", termSelection);
+    console.log("Courses:", courses);*/
+
+    const toggleSelected = (item) => setSelected(
+      selectedList.includes(item)
+      ? selectedList.filter(x => x !== item)
+      : [...selectedList, item]
+    );
+
     return (
       <div>
-        <TermSelector selection={selection} setSelection={setSelection} />
-        <CourseList selection={selection} courses={courses}/>
+        <TermSelector selection={termSelection} setSelection={setTermSelection} />
+        <CourseList selection={termSelection} courses={courses} selected={selectedList} toggleSelected={toggleSelected}/>
       </div>
     );
   }
