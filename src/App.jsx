@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import TermPage from './components/TermPage.jsx';
 import logo from './logo.svg';
 import './App.css';
 import Banner from './components/Banner';
@@ -48,7 +49,7 @@ const Main = () => {
   return (
     <div>
       <Banner title={data.title}/>
-      <CourseList courses={data.courses}/>
+      <TermPage courses={data.courses}/>
     </div>
     );
 }
