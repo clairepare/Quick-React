@@ -1,0 +1,44 @@
+.popup {
+    display: block;
+    visibility: hidden;
+  }
+  
+  .popup-show {
+    visibility:visible;
+    background-color: rgba(169, 169, 169, 0.8);
+    transition: opacity 0.2s linear; 
+  } 
+  
+  .popup-content  {
+    opacity: 0; 
+  }
+  
+  .popup-show .popup-content  {
+    opacity: 1; 
+    transition: 0.2s linear; 
+  }
+  
+  .popup-header {
+    margin-left: auto;
+  }
+
+  .popup {
+    position: fixed;     /* Make it fixed position */
+    top: 0;              /* Start from the top */
+    left: 0;             /* Start from the left */
+    width: 100%;         /* Full width */
+    height: 100%;        /* Full height */
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
+    display: flex;       /* Use flexbox */
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+    z-index: 1000;       /* High z-index to ensure it's above everything else */
+  }
+  .popup-dialog {
+    background-color: #fff;
+    padding: 20px;
+    max-height: 80vh; /* This means the popup will take up to 80% of the viewport height */
+    overflow-y: auto; /* This will add a scrollbar if the content exceeds the popup height */
+    width: 80%; /* Adjust this as needed */
+    margin: auto; /* Centers the popup horizontally */
+  }

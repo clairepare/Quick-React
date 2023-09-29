@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import TermPage from './components/TermPage.jsx';
+import CoursePage from './components/CoursePage.jsx';
 import logo from './logo.svg';
 import './App.css';
 import Banner from './components/Banner';
@@ -49,7 +49,7 @@ const Main = () => {
   return (
     <div>
       <Banner title={data.title}/>
-      <TermPage courses={data.courses}/>
+      <CoursePage courses={data.courses}/>
     </div>
     );
 }
