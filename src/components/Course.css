@@ -6,6 +6,11 @@
   }*/
 
   .selected {
-    background-color:lemonchiffon !important;
+    background-color:rgb(150, 199, 127) !important;
     color: green !important;
+  }
+
+  .conflicted {
+    background-color:rgb(224, 131, 131) !important;
+    color: rgb(61, 1, 1) !important;
   }

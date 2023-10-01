@@ -6,7 +6,7 @@ import TermSelector from './TermSelector'; // Adjust the path based on your fold
 import { terms } from '../utilities/constants';  // Adjust the path based on your folder structure
 import Popup from './Popup';
 import Schedule from './Schedule';
-import { checkOverlap, overlapDetected, conflicts, conf} from '../utilities/conflict';
+import { checkOverlap, overlapDetected, conflicts } from '../utilities/conflict';
   
   function areListsEqual(list1, list2) {
     return JSON.stringify(list1) === JSON.stringify(list2);
@@ -30,31 +30,42 @@ import { checkOverlap, overlapDetected, conflicts, conf} from '../utilities/conf
     /*console.log("Rendering TermPage with selection:", termSelection);
     console.log("Courses:", courses);*/
 
-    useEffect(() => {
-      let conflicted = conflicts(selectedList, courses);
-      
-      setConflicted((prevConflictedList) => {
-         if (areListsEqual(prevConflictedList, conflicted)) {
+    const toggleSelected = (item) => 
+    {
+      if (!conflictList.includes(item)) //only set selected if, first, not conflicting
+      {
+        setSelected( //add if not yet selected, delete if already selected
+          selectedList.includes(item)
+          ? selectedList.filter(x => x !== item)
+          : [...selectedList, item]
+        );
+
+        const updatedSelectedList = selectedList.includes(item) //need to update selectedList too
+        ? selectedList.filter(x => x !== item)
+        : [...selectedList, item];
+
+        //console.log("passing in selected ", updatedSelectedList);
+
+        //console.log("conflicts1 = ", conflicts(updatedSelectedList, courses));
+
+        let conflicted = conflicts(updatedSelectedList, courses);
+        console.log("returned conflicts", conflicted);
+
+        setConflicted((prevConflictedList) => {
+          if (areListsEqual(prevConflictedList, conflicted)) {
             console.log("returning old conflicts: ", prevConflictedList);
             return prevConflictedList;  // No change, keep the old state.
-         }
-         console.log("returning new conflicts: ", conflicted);
-         return conflicted;  // Replace with new list.
-      });
-    }, [selectedList, courses]);
+          }
+          console.log("returning new conflicts: ", conflicted);
+          return conflicted;  // Replace with new list.
+        });
 
-    const toggleSelected = (item) => {
-      if (!conf(conflictList, item)) {
-        setSelected(prevSelectedList => 
-          prevSelectedList.includes(item)
-          ? prevSelectedList.filter(x => x !== item)
-          : [...prevSelectedList, item]
-        );
+
+
+        console.log("selected: ", updatedSelectedList);
+        console.log("conflicts2: ", conflictList);
       }
     };
-    
-    console.log("please work ", conflictList);
-    
 
     /*const toggleSelected = (item) => {
       const newCourse = courses[item];

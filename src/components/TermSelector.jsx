@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import CourseList from './CourseList';
 // In TermButton.jsx, TermSelector.jsx, or any other component using `terms`
-import { terms } from './constants';  // Adjust the path based on your folder structure
+import { terms } from '../utilities/constants';  // Adjust the path based on your folder structure
 import TermButton from './TermButton';
 
 const TermSelector = ({selection, setSelection}) => (
