@@ -14,3 +14,11 @@
     background-color:rgb(224, 131, 131) !important;
     color: rgb(61, 1, 1) !important;
   }
+
+  .edit-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 20px;  /* or any desired size */
+    height: 20px; /* or any desired size */
+}

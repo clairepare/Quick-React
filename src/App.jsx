@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useJsonQuery } from './utilities/fetch';
+import Dispatcher from './components/Dispatcher.jsx';
 
 /*const schedule = {
   title: "CS Courses for 2018-2019",
@@ -46,10 +47,12 @@ const Main = () => {
   if (isLoading) return <h1>Loading course data...</h1>;
   if (!data) return <h1>No course data found</h1>;
 
+  
+
   return (
     <div>
-      <Banner title={data.title}/>
-      <CoursePage courses={data.courses}/>
+      
+      <Dispatcher data={data}/>
     </div>
     );
 }
@@ -58,7 +61,7 @@ const queryClient = new QueryClient();
 
 const App = () => {
   //const [count, setCount] = useState(0);
-  
+  console.log("App rendered");
 
   return (
     <QueryClientProvider client={queryClient}>

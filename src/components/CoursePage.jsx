@@ -7,12 +7,13 @@ import { terms } from '../utilities/constants';  // Adjust the path based on you
 import Popup from './Popup';
 import Schedule from './Schedule';
 import { checkOverlap, overlapDetected, conflicts, conf} from '../utilities/conflict';
+import Banner from './Banner';
   
   function areListsEqual(list1, list2) {
     return JSON.stringify(list1) === JSON.stringify(list2);
   }
   
-  const CoursePage = ({courses}) => {
+  const CoursePage = ({title, courses}) => {
     const [termSelection, setTermSelection] = useState("All");
     const [selectedList, setSelected] = useState([]);
     const [conflictList, setConflicted] = useState([]);
@@ -87,6 +88,7 @@ import { checkOverlap, overlapDetected, conflicts, conf} from '../utilities/conf
 
     return (
       <div>
+        <Banner title={title}/>
         <button className="btn btn-outline-dark" onClick={openPopup}><i className="bi bi-cart4"></i></button>
         <Popup open={open} close={closePopup}>
           <Schedule selection={termSelection} selected={selectedList} courses={courses} toggleSelected={toggleSelected}/>
