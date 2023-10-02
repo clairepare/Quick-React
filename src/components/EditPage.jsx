@@ -5,23 +5,64 @@ import { useLocation } from 'react-router-dom';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Banner from './Banner';
+import { dayRegex, timeRegex, spaceRegex } from "../utilities/constants.js";
 
 const validateUserData = (key, val) => {
   switch (key) {
-    case 'firstName': case 'lastName':
-      return /(^\w\w)/.test(val) ? '' : 'must be least two characters';
-    case 'email':
-      return /^\w+@\w+[.]\w+/.test(val) ? '' : 'must contain name@domain.top-level-domain';
+    case 'title':
+      return /(^\w\w)/.test(val) ? '' : ' must be at least 2 characters';
+    case 'meets':
+      return meetsMatch(val);
     default: return '';
   }
 };
+
+const meetsMatch = (val) => 
+{
+  if(val === ''){
+    return '';
+  }
+  const space = val.match(spaceRegex);
+  if (!space) {
+    return 'must contain a space';
+  }
+  console.log("val: ", val);
+
+  const [day, time] = val.split(" ");
+  const match = dayRegex.test(day);
+  console.log("match:", match);
+  const match2 = timeRegex.test(time);
+  if (match2 && match) {
+    const [startHour, startMinute] = time.split("-")[0].split(":").map(Number);
+    const [endHour, endMinute] = time.split("-")[1].split(":").map(Number);
+    if (endHour > startHour || (endHour === startHour && endMinute > startMinute)) {
+        return '';
+    } else {
+      console.log("failing nonzero timespan");
+        return 'must contain days and nonzero start-end, e.g., MWF 12:00-13:20';
+    }
+  }
+  else if (match){
+    console.log("failing time regex expr");
+    return 'must contain days and nonzero start-end, e.g., MWF 12:00-13:20';
+  }
+  else if (match2){
+    console.log("failing day regex expr");
+    return 'must contain days and nonzero start-end, e.g., MWF 12:00-13:20';
+  }
+  else{
+    console.log("failing both regex expr");
+    return 'must contain days and nonzero start-end, e.g., MWF 12:00-13:20';
+  }
+}
+
 
 const InputField = ({name, text, state, change}) => (
   <div className="mb-3">
     <label htmlFor={name} className="form-label">{text}</label>
     <input className="form-control" id={name} name={name} 
-      defaultValue={state[name]} onChange={change} />
-   <div className="invalid-feedback">{state.errors?.[name]}</div>
+      defaultValue={state.values?.[name]} onChange={change} />
+    <div className="invalid-feedback">{state.errors?.[name]}</div>
   </div>
 );
 
@@ -59,11 +100,9 @@ const EditPage = ({courses}) => {
       <Banner title={`Edit ${course.term} CS ${course.number}`}/>
       <form noValidate className={state.errors ? 'was-validated' : null}>
       
-        <InputField name="title" text="Course Name" state={state} change={change} />
+        <InputField name="title" text="Course Name:" state={state} change={change} />
         
-        <InputField name="days" text="Days" state={state} change={change} />
-        <InputField name="time1" text="Start Time" state={state} change={change} />
-        <InputField name="time2" text="End Time" state={state} change={change} />
+        <InputField name="meets" text="Meets:" state={state} change={change} />
         <ButtonBar message={"no message yet"} />
       </form>
     </div>
