@@ -1,4 +1,4 @@
-//import { useDbUpdate } from '../utilities/firebase';
+import { useDbUpdate } from '../utilities/firebase';
 import { useFormData } from '../utilities/useFormData';
 import { Link, useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
@@ -83,7 +83,7 @@ const EditPage = ({courses}) => {
 
   const { id } = useParams(); 
   const course = courses[id]; // Assuming courses is accessible here
-  //const [update, result] = useDbUpdate(`/users/${user.id}`);
+  const [update, result] = useDbUpdate(`/courses/courses/${id}`);
   console.log("rendered Edit Page");
   const [state, change] = useFormData(validateUserData, course);
   console.log("Initial state in EditPage:", state);
@@ -98,19 +98,19 @@ const EditPage = ({courses}) => {
   return (
     <div>
       <Banner title={`Edit ${course.term} CS ${course.number}`}/>
-      <form noValidate className={state.errors ? 'was-validated' : null}>
+      <form onSubmit={submit} noValidate className={state.errors ? 'was-validated' : null}>
       
         <InputField name="title" text="Course Name:" state={state} change={change} />
         
         <InputField name="meets" text="Meets:" state={state} change={change} />
-        <ButtonBar message={"no message yet"} />
+        <ButtonBar message={result?.message} />
       </form>
     </div>
     
   )
 };
 
-//onSubmit={submit} 
+//
 //<InputField name="number" text="Course Number" state={state} change={change} />
 //<InputField name="term" text="Quarter" state={state} change={change} />
 
