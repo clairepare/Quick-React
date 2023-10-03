@@ -6,7 +6,7 @@ const ScheduledCourse = ({id, course, selected, toggleSelected}) => {
     //console.log("Rendering schedule course:", course);
     return (
     
-    <div className="card m-1 p-2" onClick={() => toggleSelected(id)}>
+    <div className="card m-1 p-2" onClick={() => toggleSelected(course)}>
         <div className={"card-body"}>
             <div className="card-body">
                 <h5 className="card-title">{course.term} CS {course.number}</h5>

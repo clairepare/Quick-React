@@ -6,7 +6,7 @@ import './CourseList.css';
 import ScheduledCourse from './ScheduledCourse';
 
 const Schedule = ({selection, selected, courses, toggleSelected}) => {
-    const filteredCourses = Object.entries(courses).filter(([id, course]) => selected.includes(id));
+    const filteredCourses = Object.entries(courses).filter(([id, course]) => selected.includes(course));
     console.log("showing ", filteredCourses);
     return(
     <div className="schedule">

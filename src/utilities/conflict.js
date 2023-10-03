@@ -54,9 +54,10 @@ export const checkOverlap = (course1, course2) => {
     const c2Days = getDays(course2);
     const c1Days = getDays(course1);
 
-    const c = compareDays(c1Days, c2Days) && compareTimes(c1Times, c2Times);
-    //console.log("checkOverlap returning ", c);
-    return c;
+    if (course1.term === course2.term){
+        return compareDays(c1Days, c2Days) && compareTimes(c1Times, c2Times);
+    }
+    return false;
 };
 
 const compareTimes = (c1Times, c2Times) => {
