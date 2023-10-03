@@ -13,7 +13,7 @@ import Banner from './Banner';
     return JSON.stringify(list1) === JSON.stringify(list2);
   }
   
-  const CoursePage = ({title, courses}) => {
+  const CoursePage = ({title, courses, profile}) => {
     const [termSelection, setTermSelection] = useState("All");
     const [selectedList, setSelected] = useState([]);
     const [conflictList, setConflicted] = useState([]);
@@ -94,7 +94,7 @@ import Banner from './Banner';
           <Schedule selection={termSelection} selected={selectedList} courses={courses} toggleSelected={toggleSelected}/>
         </Popup>
         <TermSelector selection={termSelection} setSelection={setTermSelection} />
-        <CourseList selection={termSelection} courses={courses} selected={selectedList} toggleSelected={toggleSelected} conflicted={conflictList}/>
+        <CourseList selection={termSelection} courses={courses} selected={selectedList} toggleSelected={toggleSelected} conflicted={conflictList} profile={profile}/>
       </div>
     );
   }

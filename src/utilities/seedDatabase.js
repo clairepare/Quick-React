@@ -25,6 +25,14 @@ async function storeDataInFirebase() {
 
     // Store data in Firebase
     const dbRef = ref(database, '/courses'); // or any path you prefer
+
+    const adminRef = ref(database, '/admins');
+
+    // Set initial data for /admin path
+    set(adminRef, {
+        QQUapA1XtETjATKxaEEKS9RiwXa2: true
+    });
+
     await set(dbRef, data);
     
     console.log("Data successfully stored in Firebase!");

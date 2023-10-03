@@ -79,7 +79,7 @@ const ButtonBar = ({message, disabled}) => {
   );
 };
 
-const EditPage = ({courses}) => {
+const EditPage = ({courses, profile}) => {
 
   const { id } = useParams(); 
   const course = courses[id]; // Assuming courses is accessible here

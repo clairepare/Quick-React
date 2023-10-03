@@ -5,7 +5,7 @@ import { useState } from "react";
 import { signInWithGoogle, signOut, useAuthState } from '../utilities/firebase';
 //import { ReactComponent as EditIcon } from '/Users/clairepare/Dropbox/My Mac (MacBook-Pro.attlocal.net)/Desktop/Northwestern/CS 392 Rapid Prototyping/Quick-React/public/pencil-square.svg';
 
-const Course = ({id, course, selected, toggleSelected, conflicted}) => {
+const Course = ({id, course, selected, toggleSelected, conflicted, profile}) => {
     //console.log("course conflicted", conflicted, [id, course]);
     const [user] = useAuthState();
     
@@ -16,11 +16,10 @@ const Course = ({id, course, selected, toggleSelected, conflicted}) => {
     return (
     
     <div className="card m-1 p-2" onClick={() => toggleSelected(course)}>
-        {user && (
+        {profile?.isAdmin && (
         <Link to={{pathname: `/edit/${id}`}}><img src="/pencil-square.svg" alt="Edit" className="edit-icon" />
         </Link>
         )}
-        
         
         <div className={`card-body ${sel} ${con}`}>
             <div className="card-body">
