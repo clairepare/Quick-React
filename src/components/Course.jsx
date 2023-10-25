@@ -15,7 +15,9 @@ const Course = ({id, course, selected, toggleSelected, conflicted, profile}) => 
     //render === 'selected' ? console.log(id, " selected") : console.log("");
     return (
     
-    <div className="card m-1 p-2" onClick={() => toggleSelected(course)}>
+    <div className="card m-1 p-2"
+        data-cy="course"
+        onClick={() => toggleSelected(course)}>
         {profile?.isAdmin && (
         <Link to={{pathname: `/edit/${id}`}}><img src="/pencil-square.svg" alt="Edit" className="edit-icon" />
         </Link>
