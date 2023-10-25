@@ -10,7 +10,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useJsonQuery } from './utilities/fetch';
 import Dispatcher from './components/Dispatcher.jsx';
 import { useDbData } from './utilities/firebase.js';
-import firebase from 'firebase/app';
+//import firebase from 'firebase/app';
 //import { useEffect, useCallback, useState } from 'react';
 import { getDatabase, onValue, ref, update} from 'firebase/database';
 
