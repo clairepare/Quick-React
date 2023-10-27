@@ -1,7 +1,9 @@
 import { initializeApp } from 'firebase/app';
 import { useEffect, useCallback, useState } from 'react';
 import { getDatabase, onValue, ref, update} from 'firebase/database';
-import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signInWithRedirect, signOut } from 'firebase/auth';
+import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signInWithRedirect, signInWithCredential, signOut } from 'firebase/auth';
+import { connectAuthEmulator } from "firebase/auth";
+import { connectDatabaseEmulator } from "firebase/database";
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
@@ -15,7 +17,7 @@ const firebaseConfig = {
   };
 
 const firebase = initializeApp(firebaseConfig);
-
+const auth = getAuth(firebase);
 // Initialize Realtime Database and get a reference to the service
 const database = getDatabase(firebase);
 
@@ -52,11 +54,11 @@ export const useDbUpdate = (path) => {
 };
 
 export const signInWithGoogle = () => {
-  signInWithRedirect(getAuth(firebase), new GoogleAuthProvider());
+  signInWithRedirect(auth, new GoogleAuthProvider());
   //signInWithPopup(getAuth(firebase), new GoogleAuthProvider());
 };
 
-const firebaseSignOut = () => signOut(getAuth(firebase));
+const firebaseSignOut = () => signOut(auth);
 
 export { firebaseSignOut as signOut };
 
@@ -64,8 +66,43 @@ export const useAuthState = () => {
   const [user, setUser] = useState();
   
   useEffect(() => (
-    onAuthStateChanged(getAuth(firebase), setUser)
+    onAuthStateChanged(auth, setUser)
   ), []);
 
   return [user];
 };
+
+if (!globalThis.EMULATION && import.meta.env.NODE_ENV !== 'production') {
+  connectAuthEmulator(auth, "http://127.0.0.1:9099");
+  connectDatabaseEmulator(database, "127.0.0.1", 9000);
+
+  signInWithCredential(auth, GoogleAuthProvider.credential(
+    '{"sub": "qEvli4msW0eDz5mSVO6j3W7i8w1k", "email": "tester@gmail.com", "displayName":"Test User", "email_verified": true}'
+  ));
+  
+  // set flag to avoid connecting twice, e.g., because of an editor hot-reload
+  globalThis.EMULATION = true;
+}
+
+/*console.log("mode: ", import.meta.env.MODE)
+if (import.meta.env.NODE_ENV !== 'production'){
+  connectAuthEmulator(auth, "http://127.0.0.1:9099");
+  connectDatabaseEmulator(database, "127.0.0.1", 9000);
+
+  //console.log("connected")
+  signInWithCredential(auth, GoogleAuthProvider.credential(
+    '{"sub": "2Bqd9Ejz9W7gihKsDlb0oup2c1F1", "email": "tester@gmail.com", "displayName":"Test User", "email_verified": true}'
+  ));
+}*/
+
+/*if (!window.EMULATION && import.meta.env.NODE_ENV !== 'production') {
+  connectAuthEmulator(auth, "http://127.0.0.1:9099");
+  connectDatabaseEmulator(database, "127.0.0.1", 9000);
+
+  signInWithCredential(auth, GoogleAuthProvider.credential(
+    '{"sub": "qEvli4msW0eDz5mSVO6j3W7i8w1k", "email": "tester@gmail.com", "displayName":"Test User", "email_verified": true}'
+  ));
+  
+  // set flag to avoid connecting twice, e.g., because of an editor hot-reload
+  window.EMULATION = true;
+}*/
