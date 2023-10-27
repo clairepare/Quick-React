@@ -72,7 +72,8 @@ export const useAuthState = () => {
   return [user];
 };
 
-if (!globalThis.EMULATION && import.meta.env.NODE_ENV !== 'production') {
+const url =  window.location.href
+if(!url.includes("https://ultimate-scheduling.web.app/")) {
   connectAuthEmulator(auth, "http://127.0.0.1:9099");
   connectDatabaseEmulator(database, "127.0.0.1", 9000);
 
